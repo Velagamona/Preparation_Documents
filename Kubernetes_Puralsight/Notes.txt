@@ -1,0 +1,109 @@
+Kubernetes: It's Container Orchestrator. its responal for start and stop container based application based on administror.
+
+Key factors: 
+
+Workload placement:if i want to deploy container based applications into a cluster . how do i deploy? which server i need to deploy on ? does that deployed-application co-register with other services or other containers in the cluster? for that we need to define the code . so that kubernetes manage for us.
+
+Infrasturcture Abstraction: which way the traffic go through load 
+balancer. everything kubernetes manage everything.
+
+Desired state:
+
+Controlleres/control Loops: its responal to check whether the system is in desired state or not.
+
+Api server/kuberetes api: collection of objects . objects defined
+in code is to get the desired state.
+
+It's the central hub to get information for the cluster.
+
+
+API Objects:
+
+Pods: Single or more containers.
+
+Controllers: keep the system in desired state.
+
+Services: access to the applications.
+
+Storage: data stortage
+
+
+Application Deployment process:
+
+Step by step:
+
+Control plane node:
+
+                              API Server
+
+                              etcd
+
+                              scheduler
+
+                              Controller Manager
+							  
+Node Side:
+
+                               kubelet
+                         
+                               kube-proxy
+
+                               container runtime
+
+user side:
+
+                                kubectl
+
+
+Now application Deployment process explanation:
+
+when you do kubectl apply deployment.yml then kubectl send that deployment.yml manifest to api server. The api server send that manifest to the etcd. so all stored objects in the manifest stored in etcd then controller manager watching any new objects stored in etcd then controller manager create replicaset defined in deployment manifest. 
+
+scheduler checks the etcd that any pods that are not assigned any nodes or not. if any pods are not assigned . scheduler will 
+assign pods to nodes and then each pod is assigned to node in the etcd.
+
+
+How the pods on the nodes start ?
+
+kubelet watchs the api server saying that do you have any pod assign to the node. 
+
+if yes, container runtime will get all information related to containers in the pods.
+
+and also start the pods .
+
+if the pod is related to service. the service information is stored in kube-proxy.
+
+
+Note: Once you delete deployment then the replicaset,pods deleted with deployment only.
+
+services delete separately.
+
+
+
+								
+							  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
